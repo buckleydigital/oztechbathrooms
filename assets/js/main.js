@@ -1,4 +1,4 @@
-/* OZTECH Bathrooms — site interactions */
+/* OZTECH Bathrooms - site interactions */
 (function () {
   "use strict";
 
@@ -51,7 +51,7 @@
     if (window.innerWidth > 1024) setNav(false);
   });
 
-  /* Services dropdown — click support for touch & keyboard */
+  /* Services dropdown - click support for touch & keyboard */
   var menuBtns = document.querySelectorAll(".has-menu > .nav__link");
   function closeMenus() {
     document.querySelectorAll(".has-menu.is-open").forEach(function (m) {
@@ -99,7 +99,7 @@
     range.addEventListener("input", function () { set(range.value); });
   });
 
-  /* Quote form — opens the visitor's email client with the enquiry pre-filled.
+  /* Quote form - opens the visitor's email client with the enquiry pre-filled.
      To use a form service instead (Formspree, Netlify Forms, etc.), set the
      form's action/method and remove the data-mailto attribute. */
   document.querySelectorAll("form[data-mailto]").forEach(function (form) {
@@ -116,7 +116,7 @@
         "",
         (data.get("message") || "")
       ];
-      var subject = "Quote request — " + (data.get("service") || "Bathroom renovation") + " — " + (data.get("suburb") || "Sydney");
+      var subject = "Quote request | " + (data.get("service") || "Bathroom renovation") + " | " + (data.get("suburb") || "Sydney");
       var href = "mailto:" + form.getAttribute("data-mailto") +
         "?subject=" + encodeURIComponent(subject) +
         "&body=" + encodeURIComponent(lines.join("\n"));
