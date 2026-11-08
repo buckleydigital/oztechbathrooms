@@ -1,0 +1,5 @@
+project_id = "vspxonolprsrlupvlojp"
+
+[functions.submit-lead]
+# The website calls this function with the publishable key (not a JWT).
+verify_jwt = false

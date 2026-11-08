@@ -99,33 +99,58 @@
     range.addEventListener("input", function () { set(range.value); });
   });
 
-  /* Quote form - opens the visitor's email client with the enquiry pre-filled.
-     To use a form service instead (Formspree, Netlify Forms, etc.), set the
-     form's action/method and remove the data-mailto attribute. */
-  document.querySelectorAll("form[data-mailto]").forEach(function (form) {
+  /* Lead submission (Supabase edge function "submit-lead") */
+  function submitLead(payload) {
+    var cfg = window.OZTECH_CONFIG || {};
+    payload.page = location.pathname;
+    return fetch(cfg.supabaseUrl + "/functions/v1/submit-lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: cfg.supabaseKey },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
+        return data;
+      });
+    });
+  }
+  window.OZTECH_submitLead = submitLead;
+
+  function phoneFallback(form) {
+    var phone = (form && form.getAttribute("data-phone")) || "";
+    return phone ? " You can also call us on " + phone + "." : "";
+  }
+  window.OZTECH_phoneFallback = phoneFallback;
+
+  document.querySelectorAll("form[data-lead-form]").forEach(function (form) {
+    form.setAttribute("novalidate", "");
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = new FormData(form);
-      var lines = [
-        "Name: " + (data.get("name") || ""),
-        "Phone: " + (data.get("phone") || ""),
-        "Email: " + (data.get("email") || ""),
-        "Suburb: " + (data.get("suburb") || ""),
-        "Service: " + (data.get("service") || ""),
-        "",
-        (data.get("message") || "")
-      ];
-      var subject = "Quote request | " + (data.get("service") || "Bathroom renovation") + " | " + (data.get("suburb") || "Sydney");
-      var href = "mailto:" + form.getAttribute("data-mailto") +
-        "?subject=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(lines.join("\n"));
-      window.location.href = href;
       var status = form.querySelector(".form__status");
-      if (status) {
-        status.textContent = "Thanks, " + (data.get("name") || "there") + ". Your email app should now open with your enquiry ready to send.";
-        status.classList.add("is-visible");
-      }
+      var btn = form.querySelector("button[type='submit']");
+      var payload = {
+        source: form.getAttribute("data-lead-form") || "contact-form",
+        name: data.get("name"), phone: data.get("phone"), email: data.get("email"),
+        suburb: data.get("suburb"), postcode: data.get("postcode"),
+        service: data.get("service"), message: data.get("message"),
+        company: data.get("company")
+      };
+      if (btn) btn.disabled = true;
+      if (status) { status.classList.remove("is-visible", "is-error"); }
+      submitLead(payload).then(function () {
+        form.reset();
+        if (status) {
+          status.textContent = "Thanks, " + (payload.name || "there") + ". We've received your enquiry and will be in touch within one business day.";
+          status.classList.add("is-visible");
+        }
+      }).catch(function (err) {
+        if (status) {
+          status.textContent = err.message + phoneFallback(form);
+          status.classList.add("is-visible", "is-error");
+        }
+      }).then(function () { if (btn) btn.disabled = false; });
     });
   });
 
