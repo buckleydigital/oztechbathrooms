@@ -102,7 +102,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   display: flex; align-items: center; gap: 28px;
   padding-left: max(var(--gutter), env(safe-area-inset-left, 0px)); padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
 }
-.brand img { height: 52px; width: auto; }
+.brand { flex-shrink: 0; }
+.brand img { height: 52px; width: auto; max-width: none; }
 .header-call { display: none; color: var(--blue); }
 .header-call svg { width: 40px; height: 40px; }
 .nav { margin-left: auto; }
@@ -400,7 +401,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* ---------- Footer ---------- */
 .site-footer { background: var(--cream); color: var(--ink); }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.1fr 1.3fr 1fr; gap: 40px; padding-block: 70px 60px; }
-.footer-brand img { height: 56px; width: auto; margin-bottom: 18px; }
+.footer-brand img { width: 100%; max-width: 240px; height: auto; margin-bottom: 18px; }
 .footer-brand p { color: var(--muted); max-width: 30ch; }
 .site-footer h3 { font-size: 20px; font-weight: 800; margin-bottom: 14px; }
 .footer-links { list-style: none; display: grid; gap: 8px; }
