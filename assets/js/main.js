@@ -135,7 +135,7 @@
         name: data.get("name"), phone: data.get("phone"), email: data.get("email"),
         suburb: data.get("suburb"), postcode: data.get("postcode"),
         service: data.get("service"), message: data.get("message"),
-        company: data.get("company")
+        oz_hp: data.get("oz_hp")
       };
       if (btn) btn.disabled = true;
       if (status) { status.classList.remove("is-visible", "is-error"); }

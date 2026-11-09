@@ -264,7 +264,7 @@ def contact_section(selected=None, heading='Tell us about your project', bg="sec
       <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div>
       <div class="field"><label for="f-suburb">Suburb</label><input id="f-suburb" name="suburb" type="text" autocomplete="address-level2" placeholder="e.g. Ryde" required></div>
       <div class="field field--full"><label for="f-service">Service</label><select id="f-service" name="service" required>{service_options(selected)}</select></div>
-      <div class="hp-field" aria-hidden="true"><label for="f-company">Company</label><input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+      <div class="hp-field" aria-hidden="true"><label for="f-hp">Leave this field empty</label><input id="f-hp" name="oz_hp" type="text" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other"></div>
       <div class="field field--full"><label for="f-message">About your project</label><textarea id="f-message" name="message" placeholder="Room size, what you'd like changed, ideal timing…"></textarea></div>
       <button class="btn btn--dark" type="submit">Send enquiry {ARROW}</button>
       <p class="form__status" role="status" aria-live="polite"></p>
@@ -1128,7 +1128,7 @@ def quote_page():
           <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required></div>
           <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" placeholder="04xx xxx xxx" required minlength="8"></div>
           <div class="field"><label for="s-postcode">Postcode</label><input id="s-postcode" name="postcode" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="e.g. 2000" required pattern="[0-9]{{4}}" maxlength="4"></div>
-          <div class="hp-field" aria-hidden="true"><label for="s-company">Company</label><input id="s-company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+          <div class="hp-field" aria-hidden="true"><label for="s-hp">Leave this field empty</label><input id="s-hp" name="oz_hp" type="text" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-form-type="other"></div>
           <button class="btn btn--dark" type="submit">Get My Free Quote {ARROW}</button>
           <p class="form__status" role="status" aria-live="polite"></p>
           <p class="form__note">Your details are only used to respond to your enquiry. See our <a href="privacy-policy.html">Privacy Policy</a>.</p>

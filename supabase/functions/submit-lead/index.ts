@@ -150,14 +150,14 @@ Deno.serve(async (req) => {
     return json({ error: "Invalid request." }, 400);
   }
 
-  // Honeypot: bots fill hidden fields. Pretend success, store nothing.
-  if (clean(body.company, 200)) {
-    console.log("Honeypot filled; ignoring submission.");
-    return json({ ok: true });
-  }
+  // Hidden spam-trap field. Bots fill it; real people never see it. Flagged
+  // submissions are still saved (so a real lead is never lost to browser
+  // autofill) but are labelled and not emailed.
+  const flagged = !!clean(body.oz_hp, 200);
+  if (flagged) console.log("Spam-trap field was filled; saving as flagged and not emailing.");
 
   const lead = {
-    source: clean(body.source, 40) || "website",
+    source: (clean(body.source, 40) || "website") + (flagged ? " (flagged as possible spam)" : ""),
     page: clean(body.page, 120) || null,
     service: clean(body.service, 120) || null,
     timeframe: clean(body.timeframe, 120) || null,
@@ -212,7 +212,9 @@ Deno.serve(async (req) => {
   // 2) Email the lead (runs even if saving failed)
   let emailSent = false;
   const apiKey = Deno.env.get("RESEND_API_KEY");
-  if (!apiKey) {
+  if (flagged) {
+    // Not emailed; visible in the admin Leads tab.
+  } else if (!apiKey) {
     console.error("Email NOT sent: the RESEND_API_KEY secret is not set for this function.");
   } else {
     const rows: [string, string | null][] = [
@@ -291,6 +293,7 @@ Deno.serve(async (req) => {
     if (error) console.error("Couldn't mark lead as emailed:", error.message);
   }
 
+  if (flagged) return json({ ok: true });
   if (!leadId && !emailSent) {
     return json({ error: "Sorry, something went wrong sending your enquiry. Please call us instead." }, 500);
   }

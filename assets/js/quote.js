@@ -85,7 +85,7 @@
       email: data.get("email"),
       phone: data.get("phone"),
       postcode: data.get("postcode"),
-      company: data.get("company")
+      oz_hp: data.get("oz_hp")
     }).then(function () {
       form.reset();
       show(QUESTIONS);
