@@ -178,7 +178,7 @@ def footer(has_form=True):
     <div class="footer-top">
       <div class="footer-brand">
         <img src="assets/img/oztech-logo-480.png" alt="OZTECH Bathrooms" width="480" height="102" loading="lazy" data-biz-img="logo">
-        <p>Bathroom, ensuite and shower renovations across Sydney. Waterproofed to AS 3740 and finished properly.</p>
+        <p>Bathroom, ensuite and shower renovations across Sydney. Waterproofed and finished properly.</p>
         <div class="footer-social" data-biz-social hidden>
           <a href="#" data-biz-link="facebook" data-biz-wrap hidden aria-label="Facebook" target="_blank" rel="noopener">{FB}</a>
           <a href="#" data-biz-link="instagram" data-biz-wrap hidden aria-label="Instagram" target="_blank" rel="noopener">{IG}</a>
@@ -318,7 +318,7 @@ def home():
     blurbs = {
         "bathroom-renovations.html": "Full strip-out and rebuild. Main bathrooms and ensuites with new waterproofing, tiling, fixtures and fittings.",
         "shower-renovations.html": "Walk-in showers, frameless screens, recessed niches and shower-over-bath upgrades.",
-        "leaking-showers.html": "We find the source, strip back what's failed and rebuild with compliant waterproofing. Fixed properly, not patched.",
+        "leaking-showers.html": "We find the source, strip back what's failed and rebuild with new waterproofing. Fixed properly, not patched.",
         "partial-renovations.html": "New vanity, tapware, screen or tiles without the full strip-out. A good option when the budget or timeframe is tighter.",
     }
     for i, (f, n, _) in enumerate(SERVICES):
@@ -343,7 +343,7 @@ def home():
     faqs = [
         ("How much does a bathroom renovation cost in Sydney?", ["Every bathroom is different. The size of the room, the condition behind the tiles, plumbing changes and the fixtures you choose all affect the price. That's why we quote after seeing the space in person.", "After an on-site visit you'll receive a fixed, itemised quote so you know exactly what's included before any work begins."]),
         ("How long does a full bathroom renovation take?", "Timeframes depend on scope, but we give you a realistic schedule up front and keep you updated at every stage. Waterproofing needs proper curing time, and we never rush it. It's the part of a bathroom you can't see but rely on most."),
-        ("Is waterproofing included?", "Yes. Waterproofing is included in every renovation that involves wet areas, and is carried out in line with Australian Standard AS 3740 for wet-area waterproofing."),
+        ("Is waterproofing included?", "Yes. Waterproofing is included in every renovation that involves wet areas, and it's done before any tiling starts. We never skip it or cut corners on it."),
         ("Do I need to supply my own fixtures and tiles?", "You can, but you don't have to. We're happy to help you choose tiles, tapware, vanities and screens that suit your space, style and budget, or work with selections you've already made."),
         ("Can I use my bathroom during the renovation?", "For a full renovation the room will be out of action while we work. If it's your only bathroom, talk to us during the quote and we'll plan the schedule to keep the disruption as short as possible."),
         ("Do you clean up afterwards?", "Always. We protect floors and access paths during the job, keep the site tidy as we go and finish with a thorough clean, so your new bathroom is ready to use."),
@@ -369,7 +369,7 @@ def home():
         <a class="btn btn--ghost" href="#work">View Our Work</a>
       </div>
       <ul class="hero__meta reveal reveal-d4">
-        <li>{SHIELD} Waterproofing to AS 3740</li>
+        <li>{SHIELD} Waterproofing done properly</li>
         <li>{DOC} Fixed, itemised quotes</li>
         <li>{PIN} Servicing all of Sydney</li>
       </ul>
@@ -404,7 +404,7 @@ def home():
       <ul class="intro__points reveal reveal-d3">
         <li><strong>Fixed quotes</strong><span>Itemised and clear. The price you approve is the price you pay.</span></li>
         <li><strong>One team</strong><span>A single point of contact from first visit to final clean.</span></li>
-        <li><strong>Done right</strong><span>Compliant waterproofing and careful prep beneath every tile.</span></li>
+        <li><strong>Done right</strong><span>Proper waterproofing and careful prep beneath every tile.</span></li>
         <li><strong>Tidy sites</strong><span>Protected floors, tidy work areas and minimal disruption.</span></li>
       </ul>
       <a class="btn btn--dark reveal reveal-d4" href="get-a-quote.html">Book an On-Site Quote {ARROW}</a>
@@ -701,7 +701,7 @@ PAGES = [
             ("Design guidance &amp; selections", "Help choosing a layout, tiles, vanity, tapware, screen and lighting that suit your space and budget."),
             ("Strip-out &amp; disposal", "Careful removal of the old bathroom, with floors and access paths protected throughout."),
             ("Plumbing &amp; electrical", "Rough-in and fit-off for new layouts, fixtures, lighting, exhaust fans and heated towel rails."),
-            ("Waterproofing", "Wet-area waterproofing carried out to Australian Standard AS 3740 before a single tile goes down."),
+            ("Waterproofing", "Full wet-area waterproofing, done before a single tile goes down."),
             ("Floor &amp; wall tiling", "Precise setting-out, correct falls to the waste and clean, consistent grout lines."),
             ("Fit-off &amp; final clean", "Vanity, toilet, tapware, screen and accessories installed, then a thorough clean before handover."),
         ],
@@ -748,7 +748,7 @@ PAGES = [
         survey="shower",
         name="Shower Renovations",
         title="Shower Renovations Sydney | Walk-In Showers & Frameless Screens | OZTECH",
-        desc="Shower renovations in Sydney: walk-in showers, frameless glass screens, shower-over-bath upgrades, niches and rail showers. Waterproofed to AS 3740 and properly tiled.",
+        desc="Shower renovations in Sydney: walk-in showers, frameless glass screens, shower-over-bath upgrades, niches and rail showers. Properly waterproofed and tiled.",
         eyebrow="Walk-in showers &amp; shower upgrades",
         h1="Shower renovations in Sydney",
         lead="Replace a cramped framed cubicle or a tired shower-over-bath with something open and easy to clean. We rebuild showers from the base up, including waterproofing, falls, tiling, glass and tapware, so they look good and drain properly.",
@@ -765,7 +765,7 @@ PAGES = [
             ("Framed cubicle replacement", "Old aluminium-framed cubicles removed and replaced with a frameless design."),
             ("Recessed niches", "Built-in storage for shampoo and soap that sits flush with the wall. No more caddies."),
             ("Rail showers &amp; tapware", "Rain heads, hand showers and mixers in chrome, brushed nickel, matte black and more."),
-            ("Waterproofing &amp; drainage", "A new waterproof membrane to AS 3740 with correct falls to a standard or linear drain."),
+            ("Waterproofing &amp; drainage", "A new waterproof membrane with correct falls to a standard or linear drain."),
         ],
         cards_eyebrow="Options",
         cards_h2="Popular options",
@@ -793,7 +793,7 @@ PAGES = [
         process=[
             ("Assess &amp; advise", "We look at your current shower, the space available and what's achievable, then talk through options."),
             ("Quote &amp; select", "A fixed, itemised quote, plus help choosing glass, tapware, tiles and drainage."),
-            ("Rebuild", "Strip-out, base preparation, waterproofing to AS 3740, tiling, glass and tapware installed."),
+            ("Rebuild", "Strip-out, base preparation, waterproofing, tiling, glass and tapware installed."),
             ("Final check", "Water-tested, sealed, cleaned and ready for your first shower."),
         ],
         review=REVIEWS[1],
@@ -810,10 +810,10 @@ PAGES = [
         survey="leaking",
         name="Leaking Showers",
         title="Leaking Shower Repairs Sydney | Re-Waterproofing & Shower Rebuilds | OZTECH",
-        desc="Leaking shower repairs across Sydney. We find the source of the leak, remove failed waterproofing and rebuild your shower properly to Australian Standard AS 3740.",
+        desc="Leaking shower repairs across Sydney. We find the source of the leak, remove failed waterproofing and rebuild your shower properly.",
         eyebrow="Leak repairs &amp; re-waterproofing",
         h1="Leaking shower repairs in Sydney",
-        lead="A leaking shower rarely fixes itself, and the longer it goes, the more damage it can do to walls, floors and framing. We find where the water is getting through, remove what's failed and rebuild with compliant waterproofing, so the problem is solved rather than covered up.",
+        lead="A leaking shower rarely fixes itself, and the longer it goes, the more damage it can do to walls, floors and framing. We find where the water is getting through, remove what's failed and rebuild with new waterproofing, so the problem is solved rather than covered up.",
         hero_img=("14377", "Rebuilt shower with new waterproofing, marble-look tiles and frameless glass panel", "62% 38%"),
         inc_eyebrow="Our approach",
         inc_h2="Fixed properly, not patched over",
@@ -825,7 +825,7 @@ PAGES = [
             ("Inspection &amp; diagnosis", "We assess the shower, surrounding walls and floor to understand where water is escaping."),
             ("Honest advice", "A clear explanation of what's failed and the options to fix it, with a fixed, itemised quote."),
             ("Strip-out of failed areas", "Removal of tiles, bedding and the old membrane back to a sound substrate."),
-            ("Re-waterproofing", "A new waterproofing system installed to Australian Standard AS 3740, including corners, junctions and penetrations."),
+            ("Re-waterproofing", "A new waterproofing system installed, including corners, junctions and penetrations."),
             ("Retiling &amp; screen", "New tiles laid with correct falls to the waste, then the screen and fixtures refitted or replaced."),
             ("Making good", "Damaged adjacent areas (skirting, walls or flooring) repaired where needed so the finish is complete."),
         ],
@@ -848,14 +848,14 @@ PAGES = [
         media_h2="The problem is usually under the tiles",
         media_copy=[
             "In older bathrooms the waterproof membrane can break down over time, particularly at the junctions between walls and floor, around the waste and at the shower hob. Movement, poor falls and failed seals all add to the problem.",
-            "Once water gets past the membrane, it can travel into walls, subfloors and neighbouring rooms. Rebuilding the shower with a new, compliant waterproofing system is the reliable long-term fix, and a chance to modernise the shower at the same time.",
+            "Once water gets past the membrane, it can travel into walls, subfloors and neighbouring rooms. Rebuilding the shower with a new waterproofing system is the reliable long-term fix, and a chance to modernise the shower at the same time.",
         ],
         process_h2="How we fix a leaking shower",
         process_lead="Here's how we deal with a leaking shower, step by step.",
         process=[
             ("Inspect", "We check the shower, waste, junctions and surrounding areas for signs of water escaping."),
             ("Explain &amp; quote", "You'll get a clear explanation of the cause and a fixed, itemised quote to fix it properly."),
-            ("Rebuild", "Failed areas removed, new waterproofing applied to AS 3740, then retiled with correct falls."),
+            ("Rebuild", "Failed areas removed, new waterproofing applied, then retiled with correct falls."),
             ("Test &amp; finish", "Water-tested, sealed, cleaned and back in use, with nearby damage made good."),
         ],
         review=REVIEWS[1],
@@ -1148,7 +1148,7 @@ def quote_page():
 
     <ul class="quote-trust">
       <li>{DOC} Fixed, itemised quotes</li>
-      <li>{SHIELD} Waterproofing to AS 3740</li>
+      <li>{SHIELD} Waterproofing done properly</li>
       <li>{PIN} Servicing all of Sydney</li>
     </ul>
   </div>
