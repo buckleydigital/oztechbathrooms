@@ -29,6 +29,10 @@ Static website for OZTECH Bathrooms, Sydney, with a Supabase backend for leads a
    ```bash
    supabase secrets set LEAD_FROM_EMAIL="OZTECH Bathrooms Website <leads@oztechbathrooms.com.au>" --project-ref vspxonolprsrlupvlojp
    ```
+   **Check the setup:** open `https://vspxonolprsrlupvlojp.supabase.co/functions/v1/submit-lead?check=1` in a browser. It shows whether the Resend key is set, which address leads are sent from and to, whether the database is reachable and whether the sending domain is verified (no secrets are shown).
+
+   **If a lead doesn't arrive:** check Edge Functions > submit-lead > Logs. Every failure is logged with the reason. Saving and emailing are independent, so a database problem won't stop the email, and vice versa.
+
 4. **Create the admin login.** Open `supabase/seed_admin.sql`, set a password, and run it in the SQL editor. Don't commit the password.
 5. **Password reset links.** In Supabase, go to Authentication, then URL Configuration. Set Site URL to the live site and add `https://<your-domain>/admin/` to Redirect URLs.
 
