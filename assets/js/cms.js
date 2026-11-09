@@ -286,6 +286,20 @@
             return '<div class="cms-feature"><span class="cms-feature__num">' + (n < 9 ? "0" : "") + (n + 1) + "</span><h3>" + esc(i.title) + "</h3><p>" + esc(i.text) + "</p></div>";
           }).join("") + "</div></div>";
         break;
+      case "before_after":
+        el.className = "section cms-section " + (THEMES[theme] || "");
+        var pairs = (d.pairs || []).filter(function (p) { return p && safeUrl(p.before) && safeUrl(p.after); });
+        inner = '<div class="wrap">' + head(d, true) + (d.intro ? '<div class="cms-body cms-body--center">' + paras(d.intro) + "</div>" : "") +
+          '<div class="ba-grid' + (pairs.length === 1 ? " ba-grid--single" : "") + '">' + pairs.map(function (p) {
+            return '<figure class="ba-item"><div class="compare">' +
+              img(p.before, "Before: " + (p.caption || "bathroom"), "compare__before") +
+              img(p.after, "After: " + (p.caption || "bathroom"), "compare__after") +
+              '<span class="compare__tag compare__tag--before">Before</span><span class="compare__tag compare__tag--after">After</span>' +
+              '<input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">' +
+              '<span class="compare__handle" aria-hidden="true"><span class="compare__knob"><svg viewBox="0 0 26 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 1L1 6l4 5M21 1l4 5-4 5M1 6h24"/></svg></span></span>' +
+              "</div>" + (p.caption ? "<figcaption>" + esc(p.caption) + "</figcaption>" : "") + "</figure>";
+          }).join("") + "</div>" + button(d, theme) + "</div>";
+        break;
       case "cta":
         el.className = "cta-band cms-section";
         inner = (safeUrl(d.image) ? '<div class="cta-band__bg" aria-hidden="true">' + img(d.image, "") + "</div>" : "") +

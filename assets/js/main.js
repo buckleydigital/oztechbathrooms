@@ -90,14 +90,19 @@
     reveals.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* Before / after comparison */
-  document.querySelectorAll(".compare").forEach(function (cmp) {
-    var range = cmp.querySelector("input[type='range']");
-    if (!range) return;
-    function set(v) { cmp.style.setProperty("--pos", v + "%"); }
-    set(range.value);
-    range.addEventListener("input", function () { set(range.value); });
-  });
+  /* Before / after comparison sliders (also added later by the admin's custom sections) */
+  function initCompare() {
+    document.querySelectorAll(".compare:not([data-ready])").forEach(function (cmp) {
+      var range = cmp.querySelector("input[type='range']");
+      if (!range) return;
+      cmp.setAttribute("data-ready", "");
+      function set(v) { cmp.style.setProperty("--pos", v + "%"); }
+      set(range.value);
+      range.addEventListener("input", function () { set(range.value); });
+    });
+  }
+  initCompare();
+  document.addEventListener("cms:applied", initCompare);
 
   /* Lead submission (Supabase edge function "submit-lead") */
   function submitLead(payload) {

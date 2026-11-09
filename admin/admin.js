@@ -714,6 +714,7 @@
     image_text: { name: "Image and text", desc: "A photo beside a heading, text and button.", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="9" height="14"/><path d="M15 8h6M15 12h6M15 16h4"/></svg>' },
     gallery: { name: "Gallery", desc: "A grid of project photos with captions.", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg>' },
     features: { name: "Feature list", desc: "Numbered points, e.g. benefits or inclusions.", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 6h12M9 12h12M9 18h12"/><path d="M4 5v2M3.5 11h1.5v2M3.5 17h1.5l-1.5 2h1.5"/></svg>' },
+    before_after: { name: "Before & after", desc: "Drag-to-compare sliders showing a bathroom before and after.", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="18" height="14"/><path d="M12 3v18M8 12l-2 0M18 12h-2"/></svg>' },
     cta: { name: "Call to action", desc: "A bold banner with a button, optional background photo.", icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="5" width="18" height="14"/><path d="M8 13h8M10 10h4"/></svg>' }
   };
   var THEME_FIELD = { name: "theme", label: "Background", type: "select", options: [["light", "White"], ["paper", "Off-white"], ["dark", "Black"], ["ink", "Charcoal"]] };
@@ -735,6 +736,9 @@
     features: [THEME_FIELD, { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "intro", label: "Intro text", type: "textarea" },
       { name: "items", label: "Points", type: "list", item: [{ name: "title", label: "Title", type: "text" }, { name: "text", label: "Description", type: "textarea" }], add: "Add point" }],
+    before_after: [THEME_FIELD, { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
+      { name: "intro", label: "Intro text", type: "textarea" },
+      { name: "pairs", label: "Before & after photos", type: "list", item: [{ name: "before", label: "Before photo", type: "image" }, { name: "after", label: "After photo", type: "image" }, { name: "caption", label: "Caption (optional)", type: "text", placeholder: "e.g. Ensuite renovation, Ryde" }], add: "Add before & after" }].concat(BUTTON_FIELDS),
     cta: [{ name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "body", label: "Text", type: "textarea" }].concat(BUTTON_FIELDS).concat([{ name: "image", label: "Background photo (optional)", type: "image" }])
   };
@@ -939,8 +943,16 @@
       if (!editing) return;
       var btn = this;
       var d = editing.data;
+      if (d.pairs) {
+        var incomplete = d.pairs.filter(function (p) { return (p.before || p.after) && !(p.before && p.after); }).length;
+        if (incomplete) { toast("Each before & after needs both photos. Add the missing photo or remove that item.", true); return; }
+        if (!d.pairs.some(function (p) { return p.before && p.after; })) { toast("Add at least one before & after pair.", true); return; }
+      }
+      d = JSON.parse(JSON.stringify(d));
+      if (d.pairs) d.pairs = d.pairs.filter(function (p) { return p.before && p.after; });
       if (d.images) d.images = d.images.filter(function (i) { return i.url; });
       if (d.items) d.items = d.items.filter(function (i) { return i.title || i.text; });
+
       var row = { page: page, type: editing.type, after_section: editing.after_section, published: editing.published, data: d };
       var q;
       if (editing.id) q = sb.from("page_sections").update(row).eq("id", editing.id);

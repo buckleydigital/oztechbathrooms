@@ -15,7 +15,7 @@ Static website for OZTECH Bathrooms, Sydney, with a Supabase backend for leads a
 
 ## Deploying the backend
 
-1. **Run the migration.** Paste `supabase/migrations/20261108090000_cms_and_leads.sql` into the Supabase SQL editor and run it, or use the CLI:
+1. **Run the migrations.** Paste each file in `supabase/migrations/` into the Supabase SQL editor and run them in date order (`20261108090000_cms_and_leads.sql`, then `20261109090000_before_after_sections.sql`), or use the CLI:
    ```bash
    supabase link --project-ref vspxonolprsrlupvlojp
    supabase db push
@@ -40,7 +40,7 @@ Static website for OZTECH Bathrooms, Sydney, with a Supabase backend for leads a
 Go to `/admin/` and sign in. Tabs:
 - **Leads**: every enquiry, with status, notes and CSV export
 - **Page editor**: click text on any page to edit it, click images to replace them, turn sections on or off
-- **Sections**: add new sections (text, image and text, gallery, feature list, call to action) anywhere on a page
+- **Sections**: add new sections (text, image and text, gallery, feature list, before & after sliders, call to action) anywhere on a page
 - **Business info**: phone, email, service area, licence number, ABN, hours, social links and logo
 - **Media**: upload and manage images
 - **SEO**: page titles and descriptions
