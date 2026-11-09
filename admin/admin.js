@@ -723,11 +723,11 @@
   ];
   var SCHEMAS = {
     text: [THEME_FIELD, { name: "align", label: "Alignment", type: "select", options: [["left", "Left"], ["center", "Centred"]] },
-      { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text", help: "Wrap words in *asterisks* for italics." },
+      { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "body", label: "Text", type: "textarea", help: "Leave a blank line between paragraphs." }].concat(BUTTON_FIELDS),
     image_text: [THEME_FIELD, { name: "image_side", label: "Image position", type: "select", options: [["left", "Image on the left"], ["right", "Image on the right"]] },
       { name: "image", label: "Image", type: "image" }, { name: "image_alt", label: "Image description", type: "text" },
-      { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text", help: "Wrap words in *asterisks* for italics." },
+      { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "body", label: "Text", type: "textarea", help: "Leave a blank line between paragraphs." }].concat(BUTTON_FIELDS),
     gallery: [THEME_FIELD, { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "intro", label: "Intro text", type: "textarea" },
@@ -735,7 +735,7 @@
     features: [THEME_FIELD, { name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "intro", label: "Intro text", type: "textarea" },
       { name: "items", label: "Points", type: "list", item: [{ name: "title", label: "Title", type: "text" }, { name: "text", label: "Description", type: "textarea" }], add: "Add point" }],
-    cta: [{ name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text", help: "Wrap words in *asterisks* for italics." },
+    cta: [{ name: "eyebrow", label: "Small heading", type: "text" }, { name: "heading", label: "Heading", type: "text" },
       { name: "body", label: "Text", type: "textarea" }].concat(BUTTON_FIELDS).concat([{ name: "image", label: "Background photo (optional)", type: "image" }])
   };
 

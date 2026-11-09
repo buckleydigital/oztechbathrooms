@@ -94,7 +94,7 @@ def head(title, desc, path):
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="preload" as="image" href="assets/img/oztech-logo-480.webp" type="image/webp">
 """
@@ -208,7 +208,6 @@ def footer(has_form=True):
         </ul>
       </div>
     </div>
-    <div class="footer-word" aria-hidden="true">OZTECH</div>
     <div class="footer-bottom">
       <div>
         <p>&copy; <span data-year>{YEAR}</span> <span data-biz="business_name">OZTECH Bathrooms</span>. Sydney, NSW. All rights reserved.</p>
@@ -244,7 +243,7 @@ def service_options(selected=None):
     return "".join(opts)
 
 
-def contact_section(selected=None, heading='Let’s talk about <em>your bathroom.</em>', bg="section--ink"):
+def contact_section(selected=None, heading='Tell us about your project', bg="section--ink"):
     return f"""
 <section class="section {bg}" id="quote" aria-labelledby="quote-title">
   <div class="wrap contact">
@@ -335,8 +334,6 @@ def home():
         <a class="cover" href="{f}" aria-label="{n}" tabindex="-1"></a>
       </article>""")
 
-    strip_items = ["Bathroom renovations", "Ensuites", "Walk-in showers", "Leaking shower repairs", "Waterproofing", "Floor &amp; wall tiling", "Partial renovations", "Servicing all of Sydney"]
-    strip = "".join(f'<span class="strip__item">{t}</span>' for t in strip_items)
 
     reviews = "\n      ".join(review_card(n, t, f"reveal-d{i+1}") for i, (n, t) in enumerate(REVIEWS))
 
@@ -365,7 +362,7 @@ def home():
   <div class="wrap">
     <div class="hero__copy">
       <span class="eyebrow reveal">Sydney Bathroom Renovation Specialists</span>
-      <h1 class="display reveal reveal-d1" id="hero-title">Bathrooms,<br><em class="metal-text">built properly.</em></h1>
+      <h1 class="display reveal reveal-d1" id="hero-title">Bathrooms,<br>built properly.</h1>
       <p class="lead reveal reveal-d2">OZTECH Bathrooms designs and builds bathroom, ensuite and shower renovations across Sydney, waterproofed right, finished beautifully and managed by one team from strip-out to final clean.</p>
       <div class="hero__actions reveal reveal-d3">
         <a class="btn btn--light" href="get-a-quote.html">Request a Free Quote {ARROW}</a>
@@ -389,10 +386,8 @@ def home():
       </div>
     </div>
   </div>
-  <div class="scroll-cue" aria-hidden="true">Scroll<i></i></div>
 </section>
 
-<div class="strip" aria-hidden="true"><div class="strip__track">{strip}{strip}</div></div>
 
 <!-- INTRO -->
 <section class="section section--light" aria-labelledby="intro-title">
@@ -403,7 +398,7 @@ def home():
     </div>
     <div class="intro__copy">
       <span class="eyebrow reveal">About OZTECH</span>
-      <h2 class="h2 reveal reveal-d1" id="intro-title">A bathroom should feel <em>considered</em>, not compromised.</h2>
+      <h2 class="h2 reveal reveal-d1" id="intro-title">One team, from strip-out to final clean</h2>
       <p class="lead reveal reveal-d2">It's the room you start and finish every day in. We approach every renovation with the same care: honest advice at the start, meticulous preparation behind the walls, and precise finishing you can see and feel.</p>
       <p class="lead reveal reveal-d2">Whether it's a complete ensuite transformation, a new walk-in shower or fixing a leak properly, you deal with one team that takes ownership of the whole job.</p>
       <ul class="intro__points reveal reveal-d3">
@@ -423,7 +418,7 @@ def home():
     <div class="section-head">
       <div>
         <span class="eyebrow reveal">What we do</span>
-        <h2 class="h2 reveal reveal-d1" id="services-title">Specialists in <em>bathrooms</em>, and nothing else.</h2>
+        <h2 class="h2 reveal reveal-d1" id="services-title">We only do bathrooms</h2>
       </div>
       <p class="lead reveal reveal-d2">Focusing on one room means we know it inside out: the waterproofing, the drainage falls, the tiling details and the finishes that make a bathroom feel high-end.</p>
     </div>
@@ -438,12 +433,12 @@ def home():
   <div class="wrap ba">
     <div class="ba__copy">
       <span class="eyebrow reveal">Before &amp; after</span>
-      <h2 class="h2 reveal reveal-d1" id="ba-title">Same room.<br><em>A different standard.</em></h2>
+      <h2 class="h2 reveal reveal-d1" id="ba-title">Same room, new finish</h2>
       <p class="lead reveal reveal-d2">Drag the slider to see the difference. Tired tiles and worn grout replaced with crisp, handmade-look tiling, a new rail shower and a frameless screen, the layout stays, the feel is completely new.</p>
       <ul class="ba__list reveal reveal-d3">
-        <li><b>i.</b>Old tiles removed and walls prepared</li>
-        <li><b>ii.</b>Wet areas re-waterproofed before tiling</li>
-        <li><b>iii.</b>New tiling, tapware, rail shower and screen</li>
+        <li><b>01</b>Old tiles removed and walls prepared</li>
+        <li><b>02</b>Wet areas re-waterproofed before tiling</li>
+        <li><b>03</b>New tiling, tapware, rail shower and screen</li>
       </ul>
       <a class="text-link reveal reveal-d4" href="partial-renovations.html">See partial renovations {ARROW}</a>
     </div>
@@ -463,8 +458,8 @@ def home():
   <div class="wrap">
     <div class="section-head">
       <div>
-        <span class="eyebrow reveal">Recent work</span>
-        <h2 class="h2 reveal reveal-d1" id="gallery-title">Details that <em>last.</em></h2>
+        <span class="eyebrow reveal">Our work</span>
+        <h2 class="h2 reveal reveal-d1" id="gallery-title">Recent projects</h2>
       </div>
       <p class="lead reveal reveal-d2">Crisp tile lines, accurate falls to the waste, clean silicone and hardware set exactly where it should be. It's the detail you notice every day.</p>
     </div>
@@ -483,7 +478,7 @@ def home():
     <div class="section-head">
       <div>
         <span class="eyebrow reveal">How it works</span>
-        <h2 class="h2 reveal reveal-d1" id="process-title">A clear process, <em>start to finish.</em></h2>
+        <h2 class="h2 reveal reveal-d1" id="process-title">Four steps, no surprises</h2>
       </div>
       <p class="lead reveal reveal-d2">No guesswork, no chasing tradespeople. You'll know what's happening, when it's happening and what it costs.</p>
     </div>
@@ -502,7 +497,7 @@ def home():
     <div class="section-head section-head--center">
       <div>
         <span class="eyebrow reveal">Client reviews</span>
-        <h2 class="h2 reveal reveal-d1" id="reviews-title">In our clients’ <em>words.</em></h2>
+        <h2 class="h2 reveal reveal-d1" id="reviews-title">What our clients say</h2>
       </div>
     </div>
     <div class="reviews">
@@ -519,7 +514,7 @@ def home():
   <div class="wrap areas">
     <div>
       <span class="eyebrow reveal">Service area</span>
-      <h2 class="h2 reveal reveal-d1" id="areas-title">Renovating bathrooms <em>across Sydney.</em></h2>
+      <h2 class="h2 reveal reveal-d1" id="areas-title">Working across Sydney</h2>
       <p class="lead reveal reveal-d2">Based in Sydney, we work with homeowners right across the metropolitan area, from apartments and terraces to family homes. Not sure if we cover your suburb? Just ask.</p>
     </div>
     <ul class="area-list reveal reveal-d2">{area_html}</ul>
@@ -532,7 +527,7 @@ def home():
     <div class="section-head section-head--center">
       <div>
         <span class="eyebrow reveal">FAQs</span>
-        <h2 class="h2 reveal reveal-d1" id="faq-title">Questions, <em>answered.</em></h2>
+        <h2 class="h2 reveal reveal-d1" id="faq-title">Common questions</h2>
       </div>
     </div>
     {faq(faqs)}
@@ -664,7 +659,7 @@ def service_page(cfg):
     <div class="section-head section-head--center">
       <div>
         <span class="eyebrow reveal">FAQs</span>
-        <h2 class="h2 reveal reveal-d1" id="faq-title">{cfg["name"]} <em>questions.</em></h2>
+        <h2 class="h2 reveal reveal-d1" id="faq-title">Frequently asked questions</h2>
       </div>
     </div>
     {faq(cfg["faqs"])}
@@ -693,11 +688,11 @@ PAGES = [
         title="Bathroom Renovations Sydney | Complete Bathroom & Ensuite Renovations | OZTECH",
         desc="Complete bathroom and ensuite renovations across Sydney. Strip-out, waterproofing, tiling, plumbing and fit-off managed by one team with a fixed, itemised quote.",
         eyebrow="Complete bathroom &amp; ensuite renovations",
-        h1="Bathroom <em class=\"metal-text\">renovations</em> Sydney",
+        h1="Bathroom renovations in Sydney",
         lead="A full renovation is the chance to get everything right: the layout, the waterproofing, the storage and the finishes. We manage the entire project, from the first measure to the final polish, so you get a bathroom that looks exceptional and is built to last.",
         hero_img=("14377", "Fully renovated bathroom with frameless walk-in shower, wall-hung mirror cabinet, white vanity and octagon mosaic floor", "50% 62%"),
         inc_eyebrow="What's included",
-        inc_h2="Everything, <em>handled.</em>",
+        inc_h2="What's included",
         inc_copy=[
             "A full bathroom renovation involves several trades working in the right order. We coordinate every stage so nothing falls through the gaps, and you have one point of contact the whole way through.",
             "Every quote is itemised, so you can see exactly what's included before work begins.",
@@ -711,7 +706,7 @@ PAGES = [
             ("Fit-off &amp; final clean", "Vanity, toilet, tapware, screen and accessories installed, then a thorough clean before handover."),
         ],
         cards_eyebrow="Why OZTECH",
-        cards_h2="Built for the way <em>you live.</em>",
+        cards_h2="Why choose OZTECH",
         cards_lead="A great bathroom isn't just about looks. It's about how it works day to day, and how it holds up in ten years' time.",
         cards=[
             ("quote", "Fixed, itemised quotes", "Clear pricing up front. The price you approve is the price you pay."),
@@ -726,12 +721,12 @@ PAGES = [
             ("14372", "Dated bathroom with gold-framed shower and old floor tiles before renovation", "Typical before", "50% 55%"),
         ),
         media_eyebrow="Transformations",
-        media_h2="From dated to <em>timeless.</em>",
+        media_h2="Before and after",
         media_copy=[
             "Framed shower cubicles, tired tiles and vanities that don't fit the space are some of the most common things we replace. With a well-planned layout, even a modest bathroom can feel open, bright and genuinely premium.",
             "Classic black and white, warm natural tones or a sleek modern finish. We'll help you land on a look that suits your home and stands the test of time.",
         ],
-        process_h2="How your renovation <em>comes together.</em>",
+        process_h2="How your renovation works",
         process_lead="A clear sequence, regular updates and no surprises, so you always know where your project is up to.",
         process=[
             ("On-site consultation", "We measure the space, discuss how you use it and talk through ideas, layout options and budget."),
@@ -746,7 +741,7 @@ PAGES = [
             ("Do you renovate ensuites as well as main bathrooms?", "Yes. We renovate ensuites, main bathrooms and powder rooms. Smaller spaces benefit most from careful planning, and we'll help you make the most of every centimetre."),
             ("Will I need to choose all the fixtures myself?", "Only if you want to. We're happy to recommend tiles, tapware, vanities and screens that suit your space and budget, or work with selections you've already made."),
         ],
-        contact_h2="Ready for a bathroom you'll <em>love using?</em>",
+        contact_h2="Tell us about your bathroom",
     ),
     dict(
         file="shower-renovations.html",
@@ -755,11 +750,11 @@ PAGES = [
         title="Shower Renovations Sydney | Walk-In Showers & Frameless Screens | OZTECH",
         desc="Shower renovations in Sydney: walk-in showers, frameless glass screens, shower-over-bath upgrades, niches and rail showers. Properly waterproofed and beautifully tiled.",
         eyebrow="Walk-in showers &amp; shower upgrades",
-        h1="Shower <em class=\"metal-text\">renovations</em> Sydney",
+        h1="Shower renovations in Sydney",
         lead="Replace a cramped, framed cubicle or a tired shower-over-bath with something that feels open, modern and genuinely luxurious. We rebuild showers from the base up (waterproofing, falls, tiling, glass and tapware) so they look beautiful and drain perfectly.",
         hero_img=("14374", "Shower over bath with frameless glass panel, brushed nickel twin rail shower and handmade-look white wall tiles", "50% 45%"),
         inc_eyebrow="What we do",
-        inc_h2="A shower that <em>feels</em> like an upgrade.",
+        inc_h2="What we can do for your shower",
         inc_copy=[
             "A new shower can change the whole feel of a bathroom, without always needing to renovate the entire room.",
             "We'll help you choose the right configuration, glass and fixtures for your space, then build it properly from the base up.",
@@ -773,7 +768,7 @@ PAGES = [
             ("Waterproofing &amp; drainage", "A new waterproof membrane to AS 3740 with correct falls to a standard or linear drain."),
         ],
         cards_eyebrow="Options",
-        cards_h2="Designed around <em>your space.</em>",
+        cards_h2="Popular options",
         cards_lead="Every bathroom is different. Here are some of the most popular ways we transform a shower.",
         cards=[
             ("glass", "Frameless glass", "Clear, minimal glass panels and screens that make even a small room feel bigger."),
@@ -788,12 +783,12 @@ PAGES = [
             ("14377", "Frameless walk-in shower with marble-look tiles and twin rail shower", "Walk-in shower", "50% 45%"),
         ),
         media_eyebrow="Recent showers",
-        media_h2="Clean lines. <em>Clear glass.</em>",
+        media_h2="Frameless glass, clean tiling",
         media_copy=[
             "A frameless panel, a quality rail shower and well-chosen tiles can make a shower the standout feature of the room.",
             "Whether you want a walk-in shower with a single fixed panel or a refreshed shower-over-bath, we'll plan the layout, waterproofing and drainage so it looks good and works perfectly.",
         ],
-        process_h2="From cubicle to <em>centrepiece.</em>",
+        process_h2="How a shower renovation works",
         process_lead="A shower renovation is a focused project, but the steps behind the tiles matter just as much as in a full renovation.",
         process=[
             ("Assess &amp; advise", "We look at your current shower, the space available and what's achievable, then talk through options."),
@@ -808,7 +803,7 @@ PAGES = [
             ("Can you replace just the shower without touching the rest of the bathroom?", "Often, yes. Depending on the layout, we can rebuild the shower area on its own. We'll take care to blend new work with the existing finishes as closely as possible, and let you know if a wider update would give a better result."),
             ("Is frameless glass hard to keep clean?", "Not at all. With fewer frames and tracks there are fewer places for grime to build up. A quick squeegee after showering keeps glass looking clear."),
         ],
-        contact_h2="Let's design <em>your new shower.</em>",
+        contact_h2="Tell us about your shower",
     ),
     dict(
         file="leaking-showers.html",
@@ -817,11 +812,11 @@ PAGES = [
         title="Leaking Shower Repairs Sydney | Re-Waterproofing & Shower Rebuilds | OZTECH",
         desc="Leaking shower repairs across Sydney. We find the source of the leak, remove failed waterproofing and rebuild your shower properly to Australian Standard AS 3740.",
         eyebrow="Leak repairs &amp; re-waterproofing",
-        h1="Leaking <em class=\"metal-text\">shower</em> repairs Sydney",
+        h1="Leaking shower repairs in Sydney",
         lead="A leaking shower rarely fixes itself, and the longer it goes, the more damage it can do to walls, floors and framing. We find where the water is getting through, remove what's failed and rebuild with compliant waterproofing, so the problem is solved rather than covered up.",
         hero_img=("14377", "Rebuilt shower with new waterproofing, marble-look tiles and frameless glass panel", "62% 38%"),
         inc_eyebrow="Our approach",
-        inc_h2="Fixed <em>properly,</em> not patched.",
+        inc_h2="Fixed properly, not patched over",
         inc_copy=[
             "Re-grouting or re-sealing can sometimes hide a leak for a while, but if the waterproof membrane underneath has failed, water will keep finding its way through.",
             "We'll be upfront about what's causing your leak and the right way to fix it, then do the work to a standard you won't need to think about again.",
@@ -835,7 +830,7 @@ PAGES = [
             ("Making good", "Damaged adjacent areas (skirting, walls or flooring) repaired where needed so the finish is complete."),
         ],
         cards_eyebrow="Warning signs",
-        cards_h2="Is your shower <em>leaking?</em>",
+        cards_h2="Signs your shower is leaking",
         cards_lead="Leaks often start small and out of sight. If you notice any of these signs, it's worth having your shower checked sooner rather than later.",
         cards=[
             ("tile", "Loose or drummy tiles", "Tiles that sound hollow when tapped, move, crack or lift, especially on the shower floor."),
@@ -850,12 +845,12 @@ PAGES = [
             ("14377", "Rebuilt shower area with new waterproofing, tiling and frameless glass", "Rebuilt properly", "50% 50%"),
         ),
         media_eyebrow="Why showers leak",
-        media_h2="The problem is usually <em>under the tiles.</em>",
+        media_h2="The problem is usually under the tiles",
         media_copy=[
             "In older bathrooms the waterproof membrane can break down over time, particularly at the junctions between walls and floor, around the waste and at the shower hob. Movement, poor falls and failed seals all add to the problem.",
             "Once water gets past the membrane, it can travel into walls, subfloors and neighbouring rooms. Rebuilding the shower with a new, compliant waterproofing system is the reliable long-term fix, and a chance to modernise the shower at the same time.",
         ],
-        process_h2="From leak to <em>lasting repair.</em>",
+        process_h2="How we fix a leaking shower",
         process_lead="We take the guesswork out of leaking showers with a clear, step-by-step approach.",
         process=[
             ("Inspect", "We check the shower, waste, junctions and surrounding areas for signs of water escaping."),
@@ -870,7 +865,7 @@ PAGES = [
             ("Is a leaking shower urgent?", "It's best not to wait. Ongoing leaks can damage wall framing, subfloors and neighbouring rooms, and the cost of repair generally grows the longer water is getting through."),
             ("Can you upgrade the shower while fixing the leak?", "Absolutely. Because the shower is being rebuilt anyway, it's a great time to switch to a frameless screen, add a niche, change tiles or upgrade tapware."),
         ],
-        contact_h2="Get your leaking shower <em>sorted.</em>",
+        contact_h2="Tell us about your shower",
     ),
     dict(
         file="partial-renovations.html",
@@ -879,11 +874,11 @@ PAGES = [
         title="Partial Bathroom Renovations Sydney | Bathroom Updates & Refreshes | OZTECH",
         desc="Partial bathroom renovations in Sydney. Update tiles, vanities, tapware, screens and lighting without a full strip-out. A high-end refresh on a tighter budget or timeline.",
         eyebrow="Targeted bathroom updates",
-        h1="Partial <em class=\"metal-text\">renovations</em> Sydney",
+        h1="Partial bathroom renovations in Sydney",
         lead="Not every bathroom needs to be gutted. If the bones are sound, a targeted update (new wall tiles, a vanity, tapware, a screen or lighting) can make the room feel new for a fraction of the disruption. We'll help you decide what to change, and what's worth keeping.",
         hero_img=("14374", "Bathroom after partial renovation with new wall tiles, rail shower and frameless glass panel", "50% 45%"),
         inc_eyebrow="What we can update",
-        inc_h2="Change what matters. <em>Keep what works.</em>",
+        inc_h2="Change what matters, keep what works",
         inc_copy=[
             "A partial renovation focuses on the elements that make the biggest difference. Done well, it can transform the look and feel of a bathroom, without the time and cost of a complete rebuild.",
             "We'll give you honest advice on what's in good condition and what should be replaced, so you're spending where it counts.",
@@ -897,7 +892,7 @@ PAGES = [
             ("Lighting &amp; ventilation", "Updated lighting and exhaust fans for a brighter, fresher bathroom."),
         ],
         cards_eyebrow="Is a partial reno right for you?",
-        cards_h2="A smart choice <em>when&hellip;</em>",
+        cards_h2="When a partial renovation makes sense",
         cards_lead="A partial renovation is often the best value option, but only when the conditions are right. Here's when it makes sense.",
         cards=[
             ("drop", "No signs of leaks", "The existing waterproofing is performing, with no drummy tiles, damp or stains nearby."),
@@ -912,12 +907,12 @@ PAGES = [
             ("14374", "Same bathroom after partial renovation with new wall tiles, rail shower and frameless panel", "After", "50% 55%"),
         ),
         media_eyebrow="Before &amp; after",
-        media_h2="Same layout. <em>Brand new feel.</em>",
+        media_h2="Same layout, new finish",
         media_copy=[
             "In this Sydney bathroom the layout and floor stayed as they were. New handmade-look wall tiles, a brushed nickel rail shower and a frameless panel completely changed the feel of the room.",
             "Where tiles are removed in wet areas, we re-waterproof before retiling, so a partial renovation is still built to last.",
         ],
-        process_h2="A focused process, <em>done right.</em>",
+        process_h2="How a partial renovation works",
         process_lead="Smaller scope doesn't mean lower standards. Every partial renovation gets the same care and attention to detail.",
         process=[
             ("Walk-through", "We look at your bathroom together and talk about what you'd like to change, and what can stay."),
@@ -932,7 +927,7 @@ PAGES = [
             ("Will I still need waterproofing?", "If we're removing tiles in a wet area such as a shower or over a bath, yes. We re-waterproof those areas before retiling. It's an essential step that we never skip."),
             ("What if you find a problem once work starts?", "If we uncover something unexpected, like a failed membrane or water damage, we'll stop, show you, and talk through the options before going any further. Nothing extra happens without your approval."),
         ],
-        contact_h2="Give your bathroom <em>a fresh start.</em>",
+        contact_h2="Tell us about your bathroom",
     ),
 ]
 
@@ -1102,8 +1097,8 @@ def quote_page():
 <section class="quote-page" aria-labelledby="quote-title">
   <div class="wrap">
     <div class="quote-intro">
-      <span class="eyebrow">Free quote &middot; Takes 30 seconds</span>
-      <h1 class="h2" id="quote-title">Let&rsquo;s price <em>your bathroom.</em></h1>
+      <span class="eyebrow">Takes about 30 seconds</span>
+      <h1 class="h2" id="quote-title">Get a free quote</h1>
     </div>
 
     <div class="survey" id="survey">

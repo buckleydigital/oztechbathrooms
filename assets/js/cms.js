@@ -375,7 +375,7 @@
     ".cms-editing a.cover{display:none!important}" +
     ".cms-editing .hero__frame img,.cms-editing .page-hero__media img{transform:none!important}" +
     ".cms-editing .mobile-bar{position:static}" +
-    ".cms-editing .strip__track{animation:none}";
+    "";
   document.head.appendChild(style);
   document.documentElement.classList.add("cms-editing");
 
