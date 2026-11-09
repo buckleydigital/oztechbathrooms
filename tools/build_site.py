@@ -364,24 +364,6 @@ def home():
   </div>
 </section>
 
-<section class="band band--white tips" aria-labelledby="tips-title">
-  <div class="wrap tips-grid">
-    <div class="tips-img">{slot("choosing", "Double vanity with two round mirrors and marble-look tiles", "(max-width: 900px) 100vw, 50vw")}</div>
-    <div class="tips-panel">
-      <h2 id="tips-title">Choosing a bathroom renovator in Sydney</h2>
-      <p>Before you pay a deposit, ask these questions:</p>
-      <ul class="bullets">
-        <li><strong>Are you licensed and insured?</strong> Ask for the builder's licence number and check it on the NSW Fair Trading website.</li>
-        <li><strong>Is the quote itemised?</strong> A detailed quote shows what's included and makes it easy to compare.</li>
-        <li><strong>Who does the waterproofing?</strong> Ask how the wet areas will be waterproofed and whether you'll get a certificate.</li>
-        <li><strong>What do past clients say?</strong> Read reviews about communication, tidiness and finishing on time.</li>
-      </ul>
-      <p>We're happy to go through all of this with you before you commit to anything.</p>
-      <a class="btn btn--block" href="{QUOTE}">Book a Free Quote</a>
-    </div>
-  </div>
-</section>
-
 <section class="reviews" id="reviews" aria-labelledby="reviews-title">
   {slot("reviews-bg", "", "100vw", cls="reviews-bg")}
   <div class="wrap reviews-inner">
