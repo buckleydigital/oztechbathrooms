@@ -154,13 +154,6 @@
     });
   });
 
-  /* Services bar: bring the current page's tab into view on small screens */
-  var curTab = document.querySelector(".svc-bar a[aria-current='page']");
-  if (curTab) {
-    var bar = curTab.closest("ul");
-    bar.scrollLeft = curTab.parentElement.offsetLeft - (bar.clientWidth - curTab.offsetWidth) / 2;
-  }
-
   /* Back to top */
   var toTop = document.querySelector(".to-top");
   if (toTop) {

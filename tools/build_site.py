@@ -105,7 +105,6 @@ def header(active):
     svc_active = active in [s[0] for s in SERVICES]
     menu = "".join(f'<li><a href="{f}"{cur(f)}>{n}</a></li>' for f, n, _ in SERVICES)
     home = "" if active == "index.html" else "index.html"
-    svc_tabs = "".join(f'<li><a href="{f}"{cur(f)}><span class="svc-bar__icon">{ICONS[SVC_ICON[f]]}</span>{n}</a></li>' for f, n, _ in SERVICES)
     return f"""</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -137,10 +136,6 @@ def header(active):
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">{I_MENU}</button>
   </div>
 </header>
-
-<nav class="svc-bar" aria-label="Our services">
-  <ul>{svc_tabs}</ul>
-</nav>
 
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-top"><span>Menu</span><button class="drawer-close" type="button" aria-label="Close menu">{I_CLOSE}</button></div>

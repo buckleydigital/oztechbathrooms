@@ -29,7 +29,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+html { overflow-x: clip; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
 body {
   margin: 0;
   background: var(--white);
@@ -39,6 +39,7 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
@@ -142,23 +143,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .drawer-close svg { width: 32px; height: 32px; }
 .drawer-list { list-style: none; margin-bottom: 20px; }
 .drawer-label { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); margin: 6px 0 2px; }
+.svc-bar__icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: #fff; flex-shrink: 0; }
+.svc-bar__icon svg { width: 17px; height: 17px; }
 .drawer-list.drawer-list--svc a { display: flex; align-items: center; gap: 12px; }
 .drawer-list a { display: block; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 20px; font-weight: 500; text-decoration: none; }
 .drawer-foot { display: grid; gap: 12px; margin-top: 28px; }
-
-/* ---------- Services bar (every page) ---------- */
-.svc-bar { background: var(--navy); }
-.svc-bar ul { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); max-width: 1320px; margin: 0 auto; padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px)); }
-.svc-bar a {
-  display: flex; align-items: center; justify-content: center; gap: 10px; height: 58px; padding: 0 12px;
-  color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap;
-  border-bottom: 4px solid transparent; transition: background-color .2s, border-color .2s;
-}
-.svc-bar li + li a { border-left: 1px solid rgba(255,255,255,.12); }
-.svc-bar a:hover { background: rgba(255,255,255,.08); }
-.svc-bar a[aria-current="page"] { background: rgba(255,255,255,.1); border-bottom-color: var(--blue); }
-.svc-bar__icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--blue); color: #fff; flex-shrink: 0; }
-.svc-bar__icon svg { width: 17px; height: 17px; }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; isolation: isolate; color: #fff; min-height: 640px; display: flex; align-items: center; overflow: hidden; }
@@ -476,10 +465,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
   .svc-cards { grid-template-columns: 1fr 1fr; }
-  .svc-bar ul { display: flex; overflow-x: auto; scrollbar-width: none; }
-  .svc-bar ul::-webkit-scrollbar { display: none; }
-  .svc-bar li { flex: 0 0 auto; }
-  .svc-bar a { height: 54px; padding: 0 16px; font-size: 14.5px; }
 }
 @media (max-width: 900px) {
   :root { --header-h: 84px; }
