@@ -44,6 +44,8 @@ IMAGE_SLOTS = {
     "svc-partial": (16, 10), "svc-bathroom-2": (4, 5), "svc-shower-2": (4, 5), "svc-leaking-2": (4, 5),
     "svc-partial-2": (4, 5), **{f"strip-{i}": (1, 1) for i in range(1, 7)},
 }
+SVC_ICON = {"bathroom-renovations.html": "vanity", "shower-renovations.html": "shower",
+            "leaking-showers.html": "drop", "partial-renovations.html": "tile"}
 SVC_SLOT = {"bathroom-renovations.html": "svc-bathroom", "shower-renovations.html": "svc-shower",
             "leaking-showers.html": "svc-leaking", "partial-renovations.html": "svc-partial"}
 
@@ -103,6 +105,7 @@ def header(active):
     svc_active = active in [s[0] for s in SERVICES]
     menu = "".join(f'<li><a href="{f}"{cur(f)}>{n}</a></li>' for f, n, _ in SERVICES)
     home = "" if active == "index.html" else "index.html"
+    svc_tabs = "".join(f'<li><a href="{f}"{cur(f)}><span class="svc-bar__icon">{ICONS[SVC_ICON[f]]}</span>{n}</a></li>' for f, n, _ in SERVICES)
     return f"""</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -135,11 +138,19 @@ def header(active):
   </div>
 </header>
 
+<nav class="svc-bar" aria-label="Our services">
+  <ul>{svc_tabs}</ul>
+</nav>
+
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-top"><span>Menu</span><button class="drawer-close" type="button" aria-label="Close menu">{I_CLOSE}</button></div>
+  <p class="drawer-label">Our Services</p>
+  <ul class="drawer-list drawer-list--svc">
+    {"".join(f'<li><a href="{f}"><span class="svc-bar__icon">{ICONS[SVC_ICON[f]]}</span>{n}</a></li>' for f, n, _ in SERVICES)}
+  </ul>
+  <p class="drawer-label">More</p>
   <ul class="drawer-list">
     <li><a href="index.html">Home</a></li>
-    {"".join(f'<li><a href="{f}">{n}</a></li>' for f, n, _ in SERVICES)}
     <li><a href="{home}#process">Our Process</a></li>
     <li><a href="{home}#reviews">Reviews</a></li>
     <li><a href="{home}#faq">FAQs</a></li>
@@ -254,10 +265,10 @@ def write(fname, html):
 # HOME
 # =====================================================================
 HOME_SERVICES = {
-    "bathroom-renovations.html": "A full renovation covers the strip-out, plumbing, electrical, waterproofing, wall and floor tiling, fit-off and the final clean. We organise every trade, so you don't have to chase plumbers, sparkies or tilers yourself.",
-    "shower-renovations.html": "Walk-in showers, frameless screens, recessed niches and shower-over-bath upgrades. We rebuild showers from the base up so they look good and drain properly.",
-    "leaking-showers.html": "We find where the water is getting through, strip back what's failed and rebuild with new waterproofing, so the problem is fixed rather than patched over.",
-    "partial-renovations.html": "New wall tiles, a vanity, tapware or a frameless screen without a full strip-out. A good option when the layout works and the budget or timeframe is tighter.",
+    "bathroom-renovations.html": "Full strip-out and rebuild of your bathroom or ensuite. We organise every trade.",
+    "shower-renovations.html": "Walk-in showers, frameless screens, niches and shower-over-bath upgrades.",
+    "leaking-showers.html": "We find the leak, strip back what's failed and rebuild it properly.",
+    "partial-renovations.html": "New tiles, vanity, tapware or screen without a full strip-out.",
 }
 HOME_STEPS = [
     ("Free on-site consultation", "We come to you, measure up and talk through what you want, what's possible in the space and roughly what it will involve."),
@@ -270,12 +281,14 @@ HOME_STEPS = [
 
 def home():
     strip = "".join(f'<li>{slot(f"strip-{i}", "", "(max-width: 720px) 40vw, 17vw")}</li>' for i in range(1, 7))
-    svc_blocks = "".join(f"""<article class="svc-block">
-          <a class="svc-img" href="{f}" tabindex="-1" aria-hidden="true">{slot(SVC_SLOT[f], "", "(max-width: 900px) 100vw, 45vw")}</a>
-          <h3><a href="{f}">{n}</a></h3>
-          <p>{HOME_SERVICES[f]}</p>
-          <a class="text-link" href="{f}">More about {n.lower()}</a>
-        </article>""" for f, n, _ in SERVICES)
+    svc_blocks = "".join(f"""<a class="svc-card" href="{f}">
+          <span class="svc-card__img">{slot(SVC_SLOT[f], "", "(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw")}<span class="svc-card__icon">{ICONS[SVC_ICON[f]]}</span></span>
+          <span class="svc-card__body">
+            <strong>{n}</strong>
+            <span>{HOME_SERVICES[f]}</span>
+            <span class="btn btn--sm btn--block">View service</span>
+          </span>
+        </a>""" for f, n, _ in SERVICES)
     reviews = "".join(review_card(n, t) for n, t in REVIEWS)
 
     html = head("OZTECH Bathrooms | Bathroom Renovations Sydney",
@@ -313,11 +326,11 @@ def home():
 
 <section class="band band--charcoal-2" id="services" aria-labelledby="services-title">
   <div class="wrap">
-    <div class="intro">
-      <h2 id="services-title">Our Bathroom Renovation Services</h2>
-      <p class="lead">We renovate bathrooms, ensuites and showers right across Sydney, and fix leaking showers properly.</p>
+    <div class="intro intro--center">
+      <h2 id="services-title">Our Services</h2>
+      <p class="lead">Four ways we can help. Pick the one that fits your bathroom to see what's involved.</p>
     </div>
-    <div class="svc-grid">{svc_blocks}</div>
+    <div class="svc-cards">{svc_blocks}</div>
     <div class="actions"><a class="btn btn--wide" href="{QUOTE}">Get a Quote</a></div>
   </div>
 </section>
