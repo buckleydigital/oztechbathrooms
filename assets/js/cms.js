@@ -235,7 +235,7 @@
   }
 
   /* ---------- Custom sections ---------- */
-  var THEMES = { light: "section--light", paper: "section--paper", dark: "", ink: "section--ink" };
+  var THEMES = { light: "section--light", paper: "section--paper", dark: "section--dark", ink: "section--dark" };
   function head(d, center) {
     var h = "";
     if (d.eyebrow) h += '<span class="eyebrow">' + esc(d.eyebrow) + "</span>";
@@ -245,7 +245,7 @@
   function button(d, theme) {
     var url = safeUrl(d.button_url);
     if (!d.button_label || !url) return "";
-    var cls = theme === "light" || theme === "paper" ? "btn btn--dark" : "btn btn--light";
+    var cls = "btn";
     return '<div class="cms-actions"><a class="' + cls + '" href="' + esc(url) + '">' + esc(d.button_label) +
       ' <svg class="arrow" viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h17M13 1l4 4-4 4"/></svg></a></div>';
   }

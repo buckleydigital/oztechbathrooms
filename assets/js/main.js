@@ -38,7 +38,7 @@
   }
   if (drawer) {
     drawer.addEventListener("click", function (e) {
-      if (e.target.closest("a")) setNav(false);
+      if (e.target.closest("a, .drawer-close")) setNav(false);
     });
   }
   document.addEventListener("keydown", function (e) {
@@ -48,15 +48,15 @@
     }
   });
   window.addEventListener("resize", function () {
-    if (window.innerWidth > 1024) setNav(false);
+    if (window.innerWidth > 1100) setNav(false);
   });
 
   /* Services dropdown - click support for touch & keyboard */
-  var menuBtns = document.querySelectorAll(".has-menu > .nav__link");
+  var menuBtns = document.querySelectorAll(".has-menu > .nav-link");
   function closeMenus() {
     document.querySelectorAll(".has-menu.is-open").forEach(function (m) {
       m.classList.remove("is-open");
-      var b = m.querySelector(".nav__link");
+      var b = m.querySelector(".nav-link");
       if (b) b.setAttribute("aria-expanded", "false");
     });
   }
@@ -152,6 +152,26 @@
         }
       }).then(function () { if (btn) btn.disabled = false; });
     });
+  });
+
+  /* Back to top */
+  var toTop = document.querySelector(".to-top");
+  if (toTop) {
+    var topCheck = function () { toTop.classList.toggle("is-visible", window.scrollY > 600); };
+    topCheck();
+    window.addEventListener("scroll", topCheck, { passive: true });
+  }
+
+  /* Review carousel */
+  document.querySelectorAll("[data-carousel]").forEach(function (c) {
+    var track = c.querySelector(".carousel-track");
+    function step(dir) {
+      var card = track.firstElementChild;
+      var w = card ? card.getBoundingClientRect().width + 20 : track.clientWidth;
+      track.scrollBy({ left: dir * w, behavior: "smooth" });
+    }
+    c.querySelector(".prev").addEventListener("click", function () { step(-1); });
+    c.querySelector(".next").addEventListener("click", function () { step(1); });
   });
 
   /* Footer year */
