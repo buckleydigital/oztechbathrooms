@@ -3,6 +3,17 @@
   "use strict";
 
   var CFG = window.OZTECH_CONFIG;
+  if (!window.supabase || !window.supabase.createClient) {
+    var authBox = document.getElementById("auth");
+    authBox.hidden = false;
+    document.querySelectorAll("#auth form").forEach(function (f) { f.hidden = f.id !== "login-form"; });
+    var msg = document.querySelector("#login-form .auth__msg");
+    msg.hidden = false;
+    msg.classList.add("is-error");
+    msg.textContent = "The admin couldn't load. Check your internet connection and refresh the page.";
+    document.querySelector("#login-form button[type=submit]").disabled = true;
+    return;
+  }
   var sb = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
@@ -81,7 +92,9 @@
           var h = lb && doc.getElementById(lb);
           var raw = h ? h.innerHTML.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, "") : "";
           var name = norm(new DOMParser().parseFromString(raw, "text/html").documentElement.textContent || s.getAttribute("aria-label") || "Section " + (i + 1));
-          return { index: i, name: name };
+          var k = s.getAttribute("data-section-key") || s.getAttribute("aria-labelledby") || s.getAttribute("aria-label");
+          var key = k ? String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "s" + i;
+          return { index: i, key: key, name: name };
         })
       };
     });
@@ -543,7 +556,7 @@
       frame.src = pageUrl(id) + "?cms-edit=1&t=" + Date.now();
       loadContent(["hide:" + id + ":"]).then(function (map) {
         hidden = {};
-        Object.keys(map).forEach(function (k) { if (map[k] === "1") hidden[k] = true; });
+        Object.keys(map).forEach(function (k) { hidden[k] = map[k] === "1"; });
       }).catch(function () { hidden = {}; });
     }
 
@@ -605,9 +618,10 @@
 
     function renderSectionList(list) {
       $("#sec-list").innerHTML = list.map(function (s) {
-        var k = "hide:" + page + ":" + s.index;
-        var isHidden = k in changes ? changes[k] === "1" : !!hidden[k];
-        return '<div class="sec-row' + (isHidden ? " is-hidden" : "") + '" data-index="' + s.index + '">' +
+        var k = "hide:" + page + ":" + s.key;
+        var legacy = "hide:" + page + ":" + s.index;
+        var isHidden = k in changes ? changes[k] === "1" : (k in hidden ? hidden[k] : !!hidden[legacy]);
+        return '<div class="sec-row' + (isHidden ? " is-hidden" : "") + '" data-index="' + s.index + '" data-key="' + esc(s.key) + '">' +
           '<label class="switch" title="Show on website"><input type="checkbox"' + (isHidden ? "" : " checked") + '><i></i></label>' +
           '<span class="name" title="Scroll to section">' + esc(s.name) + "</span></div>";
       }).join("") || '<p class="hint">No sections.</p>';
@@ -616,11 +630,12 @@
       var row = e.target.closest(".sec-row");
       if (!row) return;
       var i = +row.getAttribute("data-index");
-      var k = "hide:" + page + ":" + i;
+      var k = "hide:" + page + ":" + row.getAttribute("data-key");
+      var legacy = "hide:" + page + ":" + i;
       var hide = !e.target.checked;
-      var saved = !!hidden[k];
-      setChange(k, hide === saved ? undefined : (hide ? "1" : null));
-      if (changes[k] === undefined) { delete changes[k]; refreshBar(); }
+      // Always save under the section's key ("0" = shown), and clear any old position-based setting.
+      setChange(k, hide ? "1" : "0");
+      if (legacy in hidden) setChange(legacy, null);
       row.classList.toggle("is-hidden", hide);
       post({ type: "cms:toggle-section", index: i, hidden: hide });
     });
@@ -690,7 +705,7 @@
       busy(btn, true, "Saving");
       saveContent(pending).then(function () {
         Object.keys(pending).forEach(function (k) {
-          if (k.indexOf("hide:") === 0) { if (pending[k] === "1") hidden[k] = true; else delete hidden[k]; }
+          if (k.indexOf("hide:") === 0) { if (pending[k] === null) delete hidden[k]; else hidden[k] = pending[k] === "1"; }
         });
         changes = {};
         busy(btn, false);
@@ -821,6 +836,12 @@
     var items = [];
     var page = "index";
     var editing = null;
+    var builtInCache = [];
+    // Which built-in section a custom section sits after: by key, else by saved position.
+    function anchorOf(s, builtIn) {
+      for (var i = 0; i < builtIn.length; i++) if (s.after_key && builtIn[i].key === s.after_key) return i;
+      return Math.min(s.after_section || 0, Math.max(0, builtIn.length - 1));
+    }
 
     function load() {
       page = $("#sections-page").value;
@@ -832,6 +853,7 @@
       ]).then(function (r) {
         if (r[0].error) throw r[0].error;
         items = r[0].data || [];
+        builtInCache = r[1].sections;
         render(r[1].sections);
       }).catch(function (err) { box.innerHTML = ""; fail(err, "Couldn't load sections."); });
     }
@@ -844,7 +866,7 @@
       }
       var html = "";
       builtIn.forEach(function (b) {
-        var group = items.filter(function (s) { return Math.min(s.after_section, builtIn.length - 1) === b.index; });
+        var group = items.filter(function (s) { return anchorOf(s, builtIn) === b.index; });
         if (!group.length) return;
         html += '<div class="group-title">After: ' + esc(b.name) + "</div>";
         group.forEach(function (s, i) {
@@ -879,7 +901,7 @@
         });
       } else if (e.target.closest("[data-move]")) {
         var dir = +e.target.closest("[data-move]").getAttribute("data-move");
-        var group = items.filter(function (x) { return x.after_section === s.after_section; });
+        var group = items.filter(function (x) { return anchorOf(x, builtInCache) === anchorOf(s, builtInCache); });
         var i = group.indexOf(s), j = i + dir;
         if (j < 0 || j >= group.length) return;
         group.splice(j, 0, group.splice(i, 1)[0]);
@@ -912,10 +934,12 @@
 
     function openEditor(type, existing) {
       pageInfo(page).then(function (info) {
+        var startIdx = existing ? anchorOf(existing, info.sections) : Math.max(0, info.sections.length - 2);
         editing = {
           id: existing ? existing.id : null,
           type: type,
-          after_section: existing ? existing.after_section : Math.max(0, info.sections.length - 2),
+          after_section: startIdx,
+          after_key: (info.sections[startIdx] || {}).key || null,
           published: existing ? existing.published : true,
           data: JSON.parse(JSON.stringify(existing ? existing.data || {} : {}))
         };
@@ -926,10 +950,13 @@
         var place = document.createElement("div");
         place.className = "grid-2";
         place.innerHTML = '<div class="field"><label for="sec-after">Place after</label><select class="select" id="sec-after">' +
-          info.sections.map(function (s) { return '<option value="' + s.index + '"' + (s.index === editing.after_section ? " selected" : "") + ">" + esc(s.name) + "</option>"; }).join("") +
+          info.sections.map(function (s) { return '<option value="' + s.index + '" data-key="' + esc(s.key) + '"' + (s.index === editing.after_section ? " selected" : "") + ">" + esc(s.name) + "</option>"; }).join("") +
           '</select></div><div class="field"><span class="label">Visibility</span><label class="switch" style="height:40px"><input type="checkbox" id="sec-pub"' + (editing.published ? " checked" : "") + "><i></i>Show on website</label></div>";
         body.appendChild(place);
-        $("#sec-after").addEventListener("change", function () { editing.after_section = +this.value; });
+        $("#sec-after").addEventListener("change", function () {
+          editing.after_section = +this.value;
+          editing.after_key = this.options[this.selectedIndex].getAttribute("data-key");
+        });
         $("#sec-pub").addEventListener("change", function () { editing.published = this.checked; });
         var fields = document.createElement("div");
         fields.className = "form-section";
@@ -953,16 +980,24 @@
       if (d.images) d.images = d.images.filter(function (i) { return i.url; });
       if (d.items) d.items = d.items.filter(function (i) { return i.title || i.text; });
 
-      var row = { page: page, type: editing.type, after_section: editing.after_section, published: editing.published, data: d };
-      var q;
-      if (editing.id) q = sb.from("page_sections").update(row).eq("id", editing.id);
-      else {
-        var same = items.filter(function (x) { return x.after_section === editing.after_section; });
+      var row = { page: page, type: editing.type, after_section: editing.after_section, after_key: editing.after_key, published: editing.published, data: d };
+      if (!editing.id) {
+        var same = items.filter(function (x) { return anchorOf(x, builtInCache) === editing.after_section; });
         row.position = same.length ? Math.max.apply(null, same.map(function (x) { return x.position; })) + 1 : 0;
-        q = sb.from("page_sections").insert(row);
+      }
+      var editId = editing.id;
+      function send(r) {
+        return editId ? sb.from("page_sections").update(r).eq("id", editId) : sb.from("page_sections").insert(r);
       }
       busy(btn, true, "Saving");
-      q.then(function (res) {
+      send(row).then(function (res) {
+        // Database not yet updated with the after_key column: save without it.
+        if (res.error && /after_key/.test(res.error.message || "")) {
+          delete row.after_key;
+          return send(row);
+        }
+        return res;
+      }).then(function (res) {
         busy(btn, false);
         if (res.error) return fail(res.error);
         closeLayer($("#section-modal"));

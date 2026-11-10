@@ -123,7 +123,20 @@
   if (mainEl) indexImages(mainEl, PAGE);
 
   var builtInSections = mainEl ? Array.prototype.slice.call(mainEl.children).filter(function (n) { return n.tagName === "SECTION"; }) : [];
-  builtInSections.forEach(function (s, i) { s.setAttribute("data-cms-index", i); });
+  // Each built-in section is identified by a stable key (its heading id or label),
+  // so hidden sections and custom sections stay attached to the right section
+  // even when sections are added, removed or reordered in the HTML.
+  function sectionKey(s, i) {
+    var k = s.getAttribute("data-section-key") || s.getAttribute("aria-labelledby") || s.getAttribute("aria-label");
+    return k ? String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") : "s" + i;
+  }
+  var sectionKeys = builtInSections.map(sectionKey);
+  builtInSections.forEach(function (s, i) { s.setAttribute("data-cms-index", i); s.setAttribute("data-cms-key", sectionKeys[i]); });
+  function anchorIndex(s) {
+    var i = s.after_key ? sectionKeys.indexOf(s.after_key) : -1;
+    if (i === -1) i = Math.min(parseInt(s.after_section, 10) || 0, builtInSections.length - 1);
+    return i;
+  }
 
   var metaDesc = document.querySelector('meta[name="description"]');
   var defaults = { title: document.title, description: metaDesc ? metaDesc.getAttribute("content") : "" };
@@ -166,7 +179,8 @@
       im.el.alt = alt != null ? alt : im.alt;
     });
     builtInSections.forEach(function (s, i) {
-      var hidden = c["hide:" + PAGE + ":" + i] === "1";
+      var byKey = c["hide:" + PAGE + ":" + sectionKeys[i]];
+      var hidden = byKey != null ? byKey === "1" : c["hide:" + PAGE + ":" + i] === "1";
       if (EDIT) s.classList.toggle("cms-hidden-section", hidden);
       else s.style.display = hidden ? "none" : "";
     });
@@ -317,10 +331,9 @@
     if (!mainEl) return;
     mainEl.querySelectorAll("[data-cms-custom]").forEach(function (n) { n.remove(); });
     var groups = {};
-    (list || []).forEach(function (s) { (groups[s.after_section] = groups[s.after_section] || []).push(s); });
+    (list || []).forEach(function (s) { var i = anchorIndex(s); (groups[i] = groups[i] || []).push(s); });
     Object.keys(groups).forEach(function (k) {
-      var idx = Math.min(parseInt(k, 10) || 0, builtInSections.length - 1);
-      var anchor = builtInSections[idx];
+      var anchor = builtInSections[+k];
       if (!anchor) return;
       var ref = anchor.nextSibling;
       // keep any non-section siblings directly after the anchor (e.g. marquee strip)
@@ -448,7 +461,7 @@
     post({
       type: "cms:ready",
       page: PAGE,
-      sections: builtInSections.map(function (s, i) { return { index: i, name: sectionName(s, i) }; })
+      sections: builtInSections.map(function (s, i) { return { index: i, key: sectionKeys[i], name: sectionName(s, i) }; })
     });
   });
 
